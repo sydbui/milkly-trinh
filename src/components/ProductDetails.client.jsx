@@ -6,12 +6,16 @@ import {
   BuyNowButton,
   AddToCartButton,
 } from "@shopify/hydrogen";
+import { Drawer, useDrawer } from "./Drawer.client";
+import { CartDetails } from "./CartDetails.client";
+import { useState } from "react";
 
 export default function ProductDetails({ product }) {
   // const { options, selectedVariant } = useProductOptions();
+  // console.log(product)
   return (
     <ProductOptionsProvider data={product}>
-      <section className="px-12 py-24 w-full grid grid-cols-2 gap-12 justify-between font-nanum">
+      <section className="px-12 py-24 w-full md:grid lg:grid-cols-2 gap-12 justify-between font-nanum">
         <div className="">
           <ProductGallery media={product.media.nodes} />
         </div>
@@ -27,7 +31,7 @@ function  ProductForm({ product }) {
   const { options, selectedVariant } = useProductOptions();
 
   return (
-    <form className="grid gap-10">
+    <form className="grid gap-10 font-bold font-trinh-green">
       {/* {
         <div className="grid gap-4">
           {options.map(({ name, values }) => {
@@ -52,20 +56,20 @@ function  ProductForm({ product }) {
       } */}
       <div className="mt-8">
         <div className="flex w-full justify-between">
-          <div className="text-2xl underline">
+          <div className="text-base md:text-2xl underline">
             {product.title}
           </div>
           <ProductPrice
-              className="text-gray-900 text-2xl font-nanum"
+              className="text-gray-900 text-base md:text-2xl font-nanum"
               variantId={selectedVariant.id}
               data={product}
           />
           </div>
           <div
-            className="prose border-gray-200 pt-6 text-black text-2xl font-light"
+            className="prose border-gray-200 pt-6 text-black text-base md:text-2xl font-light font-bold"
             dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
           ></div>
-          <div className="text-lg">
+          <div className="text-sm md:text-lg">
           ♡ Items are handmade with care but may have slight imperfections.
           </div>
       </div>
@@ -79,25 +83,44 @@ function  ProductForm({ product }) {
 function PurchaseMarkup() {
   const { selectedVariant } = useProductOptions();
   const isOutOfStock = !selectedVariant?.availableForSale || false;
+  // console.log(selectedVariant)
+  const [quantity, SetQuantity] = useState(1)
+  const { isOpen, openDrawer, closeDrawer } = useDrawer();
 
   return (
     <>
+      <Drawer open={isOpen} onClose={closeDrawer}>
+        <div className="grid h-full overflow-hidden overflow-scroll">
+          <Drawer.Title>
+            <h2 className="sr-only">Cart Drawer</h2>
+            <CartDetails onClose={closeDrawer} />
+          </Drawer.Title>
+        </div>
+      </Drawer>
       <AddToCartButton
         type="button"
         variantId={selectedVariant.id}
-        quantity={1}
+        quantity={quantity}
         accessibleAddingToCartLabel="Adding item to your cart"
         disabled={isOutOfStock}
+        onClick={isOutOfStock ? closeDrawer : openDrawer}
       >
         {isOutOfStock ? (
-        <span className="bg-trinh-green text-white line-through inline-block rounded-sm text-2xl text-center py-3 max-w-xl leading-none w-full">
+        <span className="bg-trinh-green text-white line-through inline-block rounded-sm text-base md:text-2xl text-center py-6 max-w-xl leading-none w-full cursor-default">
           ✽ Sold out ✽
         </span>) : (
           <div className="flex grid grid-cols-4">
-            <span className="bg-white text-black border border-black inline-block rounded-sm text-2xl text-center py-3 max-w-xl leading-none w-full">
-              Qty: 1
+            <span className="bg-white text-black border border-black inline-block rounded-sm text-base md:text-2xl text-center py-3 md:py-6 max-w-xl leading-none w-full">
+              Qty: {quantity}
             </span>
-            <span className="col-span-3 bg-trinh-green text-white inline-block rounded-sm text-2xl text-center py-3 max-w-xl leading-none w-full">
+            {/* <select id="quantity" className="bg-white text-black border border-black inline-block rounded-sm text-2xl text-center py-3 max-w-xl leading-none w-full">
+              <option selected>Qty: 1</option>
+              <option value={2}>Qty: 2</option>
+              <option value={3}>Qty: 3</option>
+              <option value={4}>Qty: 4</option>
+              <option value={5}>Qty: 5</option>
+            </select> */}
+            <span className="col-span-3 bg-trinh-green text-white inline-block rounded-sm text-base md:text-2xl text-center py-3 md:py-6 max-w-xl leading-none w-full">
               ✽ Add to cart ✽
             </span>
           </div>
@@ -159,7 +182,7 @@ function ProductGallery({ media }) {
 
   return (
     <div
-      className={`grid gap-4 overflow-x-scroll grid-flow-col md:grid-flow-row  md:p-0 md:overflow-x-auto md:grid-cols-2 w-screen md:w-full lg:col-span-2`}
+      className={`grid md:grid-flow-row md:p-0 md:overflow-x-auto md:grid-cols-2 w-full md:w-full lg:col-span-2`}
     >
       {media.map((med, i) => {
         let extraProps = {};
@@ -203,3 +226,5 @@ function ProductGallery({ media }) {
     </div>
   );
 }
+
+

@@ -8,8 +8,8 @@ export default function ProductCard({ product }) {
 
   return (
     <Link to={`/products/${product.handle}`}>
-        <div className="grid gap-6">
-            <div className="border border-dashed px-12 py-4">
+        <div className="grid gap-2 md:gap-6 border border-dotted border-trinh-green hover:rotate-1">
+            <div className="px-2 pt-2 md:px-12 md:py-4">
                 <div className="shadow-sm rounded">
                 {/* {isDiscounted && (
                     <label className="subpixel-antialiased absolute top-0 right-0 m-4 text-right text-notice text-red-600 text-xs">
@@ -17,18 +17,18 @@ export default function ProductCard({ product }) {
                     </label>
                 )} */}
                 <Image
-                    className="aspect-[4/5]"
+                    className="aspect-[5/5]"
                     data={product.variants.nodes[0].image}
                     alt="Alt Tag"
                 />
                 </div>
             </div>
-            <div className="flex justify-between">
-                <h3 className="text-2xl overflow-hidden text-ellipsis ">
+            <div className="flex justify-between pb-2 px-4 md:pb-6">
+                <h3 className="text-2xl overflow-hidden text-base md:text-2xl text-ellipsis ">
                     {product.title}
                 </h3>
-                <div className="flex text-2xl">
-                    $ {price.amount} USD
+                <div className="flex text-base md:text-2xl">
+                    $ {price.amount * 1} USD
                 </div>
             </div>
       </div>

@@ -13,6 +13,10 @@ module.exports = {
     extend: {
       backgroundImage: {
         'home-background': "url('/img/home-background.svg')",
+        'shop-background': "url('/img/shop-background.svg')",
+        'about-background': "url('/img/about-background.svg')",
+        'faq-background': "url('/img/faq-background.svg')",
+        'A-background': "url('/img/A-p-800.png')",
         'baby-1': "url('/img/I.png')",
       },
       colors: {

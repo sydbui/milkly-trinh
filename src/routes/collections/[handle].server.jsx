@@ -35,9 +35,9 @@ import {
         <Suspense>
           <Seo type="collection" data={collection} />
         </Suspense>
-            <div className="font-nanum pt-24 pb-24">
-                <section className="w-full px-8">
-                    <div className="grid grid-cols-2 gap-12">
+            <div className="font-nanum pt-16 md:pt-24 pb-24">
+                <section className="w-full px-4 md:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2  gap-4 md:gap-10">
                         {collection.products.nodes.map((product) => (
                         <ProductCard key={product.id} product={product} />
                         ))}

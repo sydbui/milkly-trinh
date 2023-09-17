@@ -62,18 +62,6 @@ import {
           <main role="main" id="mainContent" className="flex-grow">
             <Suspense>{children}</Suspense>
           </main>
-          <div className="container font-nanum">
-              <div className='flex justify-end pb-1.5 pt-1.5 pr-4 pl-4 fixed bottom-0 w-screen border-solid border border-t-trinh-green bg-white'>
-                <div className='flex pb-1.5 pt-1.5 text-2xl space-x-6 text-trinh-green'>
-                <div className="hover:italic">
-                  <Link to='/about'>About</Link>
-                </div>
-                <div className="hover:italic">
-                <Link to='/faq'>FAQs</Link>
-                </div>
-              </div>
-              </div>
-            </div>
         </div>
       </>
     );
